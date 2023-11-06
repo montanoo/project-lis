@@ -49,22 +49,22 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
-        <h2 class="text-white font-bold text-xl mt-4 mb-2">Choose your registration</h2>
-        <div class="flex text-white">
+        <h2 class="font-bold text-xl mt-4 mb-2">Escoge que deseas registrar</h2>
+        <div class="flex">
             <ul class="flex mb-4 border rounded-[4px] overflow-hidden">
                 <li
                     class="px-4 py-2 cursor-pointer"
-                    :class="{ [`font-bold bg-white text-black`]: state === 1 }"
+                    :class="{ [`font-bold bg-black text-white`]: state === 1 }"
                     @click="state = 1"
                 >
-                    Client
+                    Cliente
                 </li>
                 <li
                     class="px-4 py-2 cursor-pointer"
-                    :class="{ [`font-bold bg-white text-black`]: state === 2 }"
+                    :class="{ [`font-bold bg-black text-white`]: state === 2 }"
                     @click="state = 2"
                 >
-                    Company
+                    Compañía
                 </li>
             </ul>
         </div>
@@ -72,7 +72,7 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div v-if="state === 2">
                 <div>
-                    <InputLabel for="cname" value="Company Name" />
+                    <InputLabel for="cname" value="Nombre de la compañía" />
 
                     <TextInput
                         id="cname"
@@ -101,7 +101,7 @@ const submit = () => {
                     <InputError class="mt-2" :message="company.errors.cnit" />
                 </div>
                 <div class="mt-4">
-                    <InputLabel for="caddress" value="Address" />
+                    <InputLabel for="caddress" value="Dirección" />
 
                     <TextInput
                         id="caddress"
@@ -118,7 +118,7 @@ const submit = () => {
                     />
                 </div>
                 <div class="mt-4">
-                    <InputLabel for="cphone" value="Phone" />
+                    <InputLabel for="cphone" value="Teléfono" />
 
                     <TextInput
                         id="cphone"
@@ -146,7 +146,7 @@ const submit = () => {
                     <InputError class="mt-2" :message="company.errors.cemail" />
                 </div>
                 <div class="mt-4">
-                    <InputLabel for="cuser" value="Username" />
+                    <InputLabel for="cuser" value="Usuario" />
 
                     <TextInput
                         id="cuser"
@@ -160,7 +160,7 @@ const submit = () => {
                     <InputError class="mt-2" :message="company.errors.cuser" />
                 </div>
                 <div class="mt-4">
-                    <InputLabel for="cpassword" value="Password" />
+                    <InputLabel for="cpassword" value="Contraseña" />
 
                     <TextInput
                         id="cpassword"
@@ -179,7 +179,7 @@ const submit = () => {
                 <div class="mt-4">
                     <InputLabel
                         for="cpassword_confirmation"
-                        value="Confirm Password"
+                        value="Confirma Contraseña"
                     />
 
                     <TextInput
@@ -199,7 +199,7 @@ const submit = () => {
             </div>
             <div v-else>
                 <div>
-                    <InputLabel for="username" value="Username" />
+                    <InputLabel for="username" value="Usuario" />
 
                     <TextInput
                         id="name"
@@ -214,7 +214,7 @@ const submit = () => {
                     <InputError class="mt-2" :message="form.errors.username" />
                 </div>
 
-                  <div class="mt-4">
+                <div class="mt-4">
                     <InputLabel for="email" value="Email" />
 
                     <TextInput
@@ -230,7 +230,7 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="name" value="Name" />
+                    <InputLabel for="name" value="Nombre" />
 
                     <TextInput
                         id="name"
@@ -245,7 +245,7 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="lastname" value="Lastname" />
+                    <InputLabel for="lastname" value="Apellido" />
 
                     <TextInput
                         id="lastname"
@@ -275,7 +275,7 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="date" value="Birthdate" />
+                    <InputLabel for="date" value="Fecha de nacimiento" />
 
                     <TextInput
                         id="date"
@@ -290,7 +290,7 @@ const submit = () => {
                 </div>
 
                 <div class="mt-4">
-                    <InputLabel for="password" value="Password" />
+                    <InputLabel for="password" value="Contraseña" />
 
                     <TextInput
                         id="password"
@@ -307,7 +307,7 @@ const submit = () => {
                 <div class="mt-4">
                     <InputLabel
                         for="password_confirmation"
-                        value="Confirm Password"
+                        value="Confirmar Contraseña"
                     />
 
                     <TextInput
@@ -326,20 +326,13 @@ const submit = () => {
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mt-4 px-1">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >
-                    Already registered?
-                </Link>
-
+            <div class="flex items-center justify-end mt-4 px-1">
                 <PrimaryButton
                     class="ml-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Register
+                    Regístrate
                 </PrimaryButton>
             </div>
         </form>

@@ -88,6 +88,7 @@ class RegisteredUserController extends Controller
             'lastname' => $request->lastname,
             'dui' => $request->dui,
             'birthdate' => $request->birthdate,
+            'user_id' => $user->id,
         ]);
 
         return redirect(RouteServiceProvider::HOME);

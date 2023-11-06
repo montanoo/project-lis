@@ -14,6 +14,7 @@ class Client extends Model
         'lastname',
         'dui',
         'birthdate',
+        'user_id'
     ];
 
     public function hasUser(): HasOne

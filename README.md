@@ -3,12 +3,14 @@
 -   Clonar el repositorio al local
 -   Entrar a la carpeta y correr el comando `composer install`
 -   Realizar un archivo en la carpeta database que se llame `database.sqlite`, es decir la ruta será `database/database.sqlite`
-- Ejecutar el comando `npm install`
-- Ejecutar el comando `php artisan serve` para levantar el servidor de Laravel
-- Ejecutar el comando `npm run dev` para levantar el servidor de Node con fast reload.
-- Ejecutar el comando `php artisan migrate` para correr las migraciones (crear la base de datos)
-- Ejecutar el comando `php artisan db:seed` para que se cree el usuario admin@admin.com con contraseña password.
-- Entrar a la ruta localhost:8000.
+-   Ejecutar el comando `npm install`
+-   Ejecutar el comando `php artisan serve` para levantar el servidor de Laravel
+-   Ejecutar el comando `npm run dev` para levantar el servidor de Node con fast reload.
+-   Copiar el archivo `.env.example` en un archivo `.env`
+-   Ejecutar el comando `php artisan migrate` para correr las migraciones (crear la base de datos)
+-   Ejecutar el comando `php artisan db:seed` para que se cree el usuario admin@admin.com con contraseña password.
+-   Ejecutar el comando `php artisan key:generate`
+-   Entrar a la ruta localhost:8000.
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 

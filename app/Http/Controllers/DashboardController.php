@@ -19,10 +19,10 @@ class DashboardController extends Controller
             $client = Client::query()->where('user_id', $user->id)->first();
             return Inertia::render('Dashboard', ['client' => $client]);
         } else if ($user->state_id === 2) {
-            $company = Company::query()->with('coupons')->where('user_id', $user->id)->first();
+            $company = Company::query()->with(['coupons', 'purchases'])->where('user_id', $user->id)->first();
             return Inertia::render('CompanyDashboard', ['company' => $company]);
         } else {
-            $companies = Company::query()->get();
+            $companies = Company::query()->with('purchases')->get();
             return Inertia::render('AdminDashboard', ['companies' => $companies]);
         }
     }

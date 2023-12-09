@@ -29,4 +29,8 @@ class Company extends Model
     public function coupons() {
         return $this->hasMany(Coupon::class, 'company_id');
     }
+
+    public function purchases() {
+        return $this->hasMany(Purchases::class, 'company_id');
+    }
 }

@@ -27,12 +27,16 @@ defineProps({
         type: String,
         required: true,
     },
+    coupons: {
+        required: true,
+    },
 });
 </script>
 
 <template>
     <Head title="La Cuponera" />
     <HeaderComponent />
+    {{ console.log($page.props.auth.user) }}
 
     <main class="main__Content">
         <section
@@ -62,9 +66,9 @@ defineProps({
         <section class="max-w-[1300px] mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 py-8 gap-5">
                 <CardComponent
-                    v-for="(name, id) in array"
+                    v-for="(coupon, id) in coupons"
                     :key="id"
-                    :name="name"
+                    :coupon="coupon"
                 />
             </div>
         </section>

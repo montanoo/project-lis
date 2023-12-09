@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCompanyRequest;
-use App\Http\Requests\UpdateCompanyRequest;
-use App\Models\Company;
+use App\Http\Requests\StoreCouponRequest;
+use App\Http\Requests\UpdateCouponRequest;
+use App\Models\Coupon;
+use App\Providers\RouteServiceProvider;
 
-class CompanyController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,15 +28,18 @@ class CompanyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCompanyRequest $request)
+    public function store(StoreCouponRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $coupon = new Coupon($validated);
+        $coupon->save();
+        return redirect(RouteServiceProvider::HOME);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show(Coupon $coupon)
     {
         //
     }
@@ -43,7 +47,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company)
+    public function edit(Coupon $coupon)
     {
         //
     }
@@ -51,19 +55,16 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCompanyRequest $request, $id)
+    public function update(UpdateCouponRequest $request, Coupon $coupon)
     {
-        $validated = $request->validated();
-        $company = Company::query()->where('id', $id)->firstOrFail();
-        $company->update($validated);
-        $company->save();
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Coupon $coupon)
     {
-        Company::query()->where('id', $id)->delete();
+        //
     }
 }

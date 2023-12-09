@@ -1,34 +1,136 @@
 <template>
-    <div class="bg-white rounded-[5px] pb-4">
+    <div
+        class="bg-white rounded-[5px] pb-4"
+        @click="$page.props.auth.user ? (active = true) : ''"
+        :class="{ 'cursor-pointer': $page.props.auth.user }"
+    >
         <div class="relative max-w-[310px]">
             <img src="../assets/card__image.png" alt="" />
             <div class="px-4 py-4 flex flex-col gap-4">
-                <div class="flex justify-between">
-                    <p>01.10.2023</p>
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 18 18"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M13.6607 1.92859C13.8165 1.92859 13.9612 2.00373 14.0511 2.12777L14.0861 2.18384L16.6619 7.01346L16.6894 7.07929L16.6969 7.10359L16.7078 7.15328L16.7138 7.20985L16.7125 7.27375L16.7143 7.23216C16.7143 7.29972 16.7004 7.36407 16.6752 7.42251L16.6567 7.46082L16.6306 7.50364L16.5967 7.54767L9.38562 15.8816C9.32127 15.968 9.23314 16.025 9.13742 16.0524L9.10013 16.0614L9.03752 16.0701L8.99985 16.0714L8.93517 16.0671L8.88047 16.0567L8.81406 16.0349L8.79754 16.0271C8.73949 16.0014 8.68613 15.9632 8.64152 15.913L1.39543 7.53835L1.3555 7.48204L1.3247 7.42219L1.30241 7.35835L1.28753 7.27407L1.28735 7.19217L1.29691 7.12872L1.30307 7.10352L1.32486 7.04175L1.34244 7.0053L3.91387 2.18384C3.98719 2.04637 4.12158 1.95405 4.27332 1.93311L4.33929 1.92859H13.6607ZM11.511 7.7143H6.48705L9.00062 14.2457L11.511 7.7143ZM5.45464 7.7143H2.8215L7.56126 13.1902L5.45464 7.7143ZM15.1765 7.7143H12.5453L10.4413 13.1857L15.1765 7.7143ZM6.44397 2.89223H4.62793L2.57014 6.75002H5.41478L6.44397 2.89223ZM10.5576 2.89223H7.44169L6.4125 6.75002H11.5862L10.5576 2.89223ZM13.3714 2.89223H11.5553L12.5845 6.75002H15.4279L13.3714 2.89223Z"
-                            fill="#D4A373"
-                        />
-                    </svg>
+                <p class="font-bold text-xl">
+                    {{ coupon.title }} de
+                    <span class="italic text-blue-950">{{
+                        coupon.company.name
+                    }}</span>
+                </p>
+                <div class="flex gap-8">
+                    <p class="flex flex-col">
+                        <span class="font-bold">Precio:</span>
+                        ${{ coupon.price.toFixed(2) }}
+                    </p>
+                    <p class="flex flex-col">
+                        <span class="font-bold">Precio oferta:</span>
+                        ${{ coupon.offer_price.toFixed(2) }}
+                    </p>
                 </div>
-                <h3>{{ name }}</h3>
+                <p class="flex flex-col">
+                    <span class="font-bold">Descripción</span>
+                    {{ coupon.description }}
+                </p>
+                <div class="flex gap-4">
+                    <p class="flex flex-col">
+                        <span class="font-bold">Empieza el</span>
+                        {{ format(new Date(coupon.start_offer), "d/MM/yyyy") }}
+                    </p>
+                    <p class="flex flex-col">
+                        <span class="font-bold">Termina el</span>
+                        {{ format(new Date(coupon.end_offer), "d/MM/yyyy") }}
+                    </p>
+                </div>
                 <p class="font-lora text-[12px] text-[#6C757D]">
                     ¿Qué esperas para ahorrar?
                 </p>
             </div>
         </div>
+        <Modal :show="active" @close="active = false" class="py-2 px-4">
+            <form class="flex flex-col gap-4" @submit.prevent="submit">
+                <h3 class="text-2xl">
+                    Compra
+                    {{ coupon.title }} de
+                    <span class="italic text-blue-950">{{
+                        coupon.company.name
+                    }}</span>
+                    $({{ coupon.price }})
+                </h3>
+                <div class="flex flex-col">
+                    <label for="title">Número de tarjeta</label>
+                    <input
+                        name="title"
+                        type="number"
+                        class="rounded-md text-sm"
+                        v-model="form.card"
+                    />
+                </div>
+                <div class="flex flex-col">
+                    <label for="price">Fecha de expiración</label>
+                    <input
+                        name="price"
+                        type="date"
+                        class="rounded-md text-sm"
+                        :min="format(new Date(), 'yyyy-mm-d')"
+                        v-model="form.expiration_date"
+                    />
+                    <span class="text-red-500" v-if="error[0]?.expiration">{{
+                        error[0]?.expiration
+                    }}</span>
+                </div>
+                <div class="flex flex-col">
+                    <label for="price">CVV</label>
+                    <input
+                        name="price"
+                        type="number"
+                        class="rounded-md text-sm"
+                        v-model="form.cvv"
+                    />
+                </div>
+                <div class="flex flex-col">
+                    <label for="price">Cantidad a comprar</label>
+                    <input
+                        name="date"
+                        type="number"
+                        class="rounded-md text-sm"
+                        max="5"
+                        v-model="form.amount"
+                    />
+                </div>
+                <button
+                    type="submit"
+                    class="w-full bg-black text-white py-2 border border-black hover:border-gray-600 rounded-md hover:bg-white hover:text-black transition-all duration-300"
+                >
+                    Comprar
+                </button>
+            </form>
+        </Modal>
     </div>
 </template>
 
 <script setup>
-defineProps({
-    name: { required: true, type: String },
+import { differenceInDays, format } from "date-fns";
+import Modal from "./Modal.vue";
+import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
+
+const active = ref(false);
+
+const form = useForm({
+    card: "",
+    expiration_date: "",
+    cvv: "",
+    amount: "",
 });
+
+defineProps({
+    coupon: { required: true, type: String },
+});
+
+const error = ref([]);
+
+function submit() {
+    if (differenceInDays(new Date(), new Date(form.expiration_date)) > 0) {
+        error.value.push({ expiration: "Fecha invalida" });
+    }
+    if (differenceInDays(new Date(), new Date(form.expiration_date)))
+        console.log(form);
+    console.log(format(new Date(), "yyyy-mm-dd"));
+}
 </script>

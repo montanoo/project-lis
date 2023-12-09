@@ -18,6 +18,8 @@ return new class extends Migration
             $table->text('nit');
             $table->text('address');
             $table->text('phone')->nullable();
+            $table->boolean('active')->default(false);
+            $table->float('tax')->default(0);
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });

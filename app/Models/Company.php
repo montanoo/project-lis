@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Company extends Model
@@ -15,11 +16,17 @@ class Company extends Model
         'nit',
         'address',
         'phone',
-        'user_id'
+        'user_id',
+        'active',
+        'tax'
     ];
 
     public function hasUser(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function coupons() {
+        return $this->hasMany(Coupon::class, 'company_id');
     }
 }
